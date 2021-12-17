@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 const Login = (props) => {
   const { push } = useHistory();
 
+  const [error, setError] = useState("Forgot Password?");
+
   const [info, setInfo] = useState({
     username: "",
     password: "",
@@ -19,6 +21,9 @@ const Login = (props) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (info.username !== "Lambda" && info.password !== "School") {
+      setError("Incorrect username / password combination");
+    }
     axiosWithAuth()
       .post(`http://localhost:5000/api/login`, info)
       .then((res) => {
@@ -39,6 +44,7 @@ const Login = (props) => {
           <Label>
             Username
             <Input
+              id="username"
               onChange={handleChange}
               name="username"
               value={info.username}
@@ -47,13 +53,17 @@ const Login = (props) => {
           <Label>
             Password
             <Input
+              id="password"
               type="password"
               onChange={handleChange}
               name="password"
               value={info.password}
             />
           </Label>
-          <Button onClick={handleLogin}>Log In</Button>
+          <Button id="submit" onClick={handleLogin}>
+            Log In
+          </Button>
+          <P id="error">{error}</P>
         </FormGroup>
       </ModalContainer>
     </ComponentContainer>
@@ -103,4 +113,8 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 1rem;
   width: 100%;
+`;
+
+const P = styled.p`
+  color: red;
 `;

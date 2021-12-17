@@ -20,7 +20,7 @@ const View = (props) => {
         setIsLoggedIn(localStorage.getItem("token"));
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [articles]);
 
@@ -29,6 +29,9 @@ const View = (props) => {
       .delete(`http://localhost:5000/api/articles/${id}`)
       .then((res) => {
         setArticles(res.data);
+      })
+      .catch((err) => {
+        console.err(err);
       });
   };
 
@@ -38,6 +41,9 @@ const View = (props) => {
       .then((res) => {
         setArticles(res.data);
         setEditing(false);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   };
 

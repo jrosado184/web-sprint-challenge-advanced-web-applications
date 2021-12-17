@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import PrivateRoute from "./PrivateRoute";
 import Header from "./Header";
@@ -17,9 +17,9 @@ const App = () => {
       <BloomHeader />
       <Header isLoggedIn={isLoggedIn} />
       <RouteContainer>
-        <PrivateRoute path="/view">
+        <Route path="/view">
           <View setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
-        </PrivateRoute>
+        </Route>
         <Route exact path="/">
           <Login />
         </Route>
