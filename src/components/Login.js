@@ -1,15 +1,64 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
+import axiosWithAuth from "../utils/axiosWithAuth";
+import { useHistory } from "react-router-dom";
+const Login = (props) => {
+  const { push } = useHistory();
 
-const Login = () => {
-    
-    return(<ComponentContainer>
-        <ModalContainer>
-            <h1>Welcome to Blogger Pro</h1>
-            <h2>Please enter your account information.</h2>
-        </ModalContainer>
-    </ComponentContainer>);
-}
+  const [info, setInfo] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setInfo({
+      ...info,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post(`http://localhost:5000/api/login`, info)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        push("/view");
+      })
+      .catch((err) => {
+        console.log(err, "Invalid Credentials");
+      });
+  };
+
+  return (
+    <ComponentContainer>
+      <ModalContainer>
+        <h1>Welcome to Blogger Pro</h1>
+        <h2>Please enter your account information.</h2>
+        <FormGroup>
+          <Label>
+            Username
+            <Input
+              onChange={handleChange}
+              name="username"
+              value={info.username}
+            />
+          </Label>
+          <Label>
+            Password
+            <Input
+              type="password"
+              onChange={handleChange}
+              name="password"
+              value={info.password}
+            />
+          </Label>
+          <Button onClick={handleLogin}>Log In</Button>
+        </FormGroup>
+      </ModalContainer>
+    </ComponentContainer>
+  );
+};
 
 export default Login;
 
@@ -22,36 +71,36 @@ export default Login;
 //6. MAKE SURE TO ADD id="username", id="password", id="error" AND id="submit" TO THE APPROPRIATE DOM ELEMENTS. YOUR AUTOTESTS WILL FAIL WITHOUT THEM.
 
 const ComponentContainer = styled.div`
-    height: 70%;
-    justify-content: center;
-    align-items: center;
-    display:flex;
-`
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
 
 const ModalContainer = styled.div`
-    width: 500px;
-    background: white;
-    padding: 2rem;
-    text-align: center;
-`
+  width: 500px;
+  background: white;
+  padding: 2rem;
+  text-align: center;
+`;
 
 const Label = styled.label`
-    display: block;
-    text-align: left;
-    font-size: 1.5rem;
-`
+  display: block;
+  text-align: left;
+  font-size: 1.5rem;
+`;
 
 const FormGroup = styled.form`
-    padding:1rem;
-`
+  padding: 1rem;
+`;
 
 const Input = styled.input`
-    font-size: 1rem;
-    padding: 1rem 0;
-    width:100%;
-`
+  font-size: 1rem;
+  padding: 1rem 0;
+  width: 100%;
+`;
 
 const Button = styled.button`
-    padding:1rem;
-    width: 100%;
-`
+  padding: 1rem;
+  width: 100%;
+`;
