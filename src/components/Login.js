@@ -44,26 +44,26 @@ const Login = (props) => {
           <Label>
             Username
             <Input
-              id="username"
+              id='username'
               onChange={handleChange}
-              name="username"
+              name='username'
               value={info.username}
             />
           </Label>
           <Label>
             Password
             <Input
-              id="password"
-              type="password"
+              id='password'
+              type='password'
               onChange={handleChange}
-              name="password"
+              name='password'
               value={info.password}
             />
           </Label>
-          <Button id="submit" onClick={handleLogin}>
+          <Button id='submit' onClick={handleLogin}>
             Log In
           </Button>
-          <P id="error">{error}</P>
+          <P id='error'>{error}</P>
         </FormGroup>
       </ModalContainer>
     </ComponentContainer>

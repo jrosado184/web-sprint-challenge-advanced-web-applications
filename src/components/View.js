@@ -22,7 +22,7 @@ const View = (props) => {
       .catch((err) => {
         console.error(err);
       });
-  }, [articles]);
+  }, []);
 
   const handleDelete = (id) => {
     axiosWithAuth()
@@ -64,7 +64,7 @@ const View = (props) => {
           THIS IS A PROTECTED PAGE, IF YOU ARE AN ADMIN PLEASE LOG IN FOR ACCESS
         </HeaderContainer>
       )}
-      <ContentContainer flexDirection="row">
+      <ContentContainer flexDirection='row'>
         <ArticleContainer>
           {articles.map((article) => {
             return (
